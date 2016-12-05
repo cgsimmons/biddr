@@ -8,6 +8,36 @@ class Auction < ApplicationRecord
   validates :end_date, presence: true
   validate :valid_end_date?
 
+  include AASM
+  aasm whiny_transitions: false do
+    state :draft, initial: true
+    state :published
+    state :reserve_met
+    state :won
+    state :canceled
+    state :reserve_not_met
+
+    event :publish do
+      transitions from: :draft, to: :published
+    end
+
+    event :meet_reserve do
+      transtitions from: :published, to: :reserve_met
+    end
+
+    event :sell do
+      transitions from: :reserve_met, to: :won
+    end
+
+    event :cancel do
+      transitions from: [:draft, :published, :won, :reserve_met], to: :canceled
+    end
+
+    event :do_not_sell do
+      transitions from: :published, to: :reserve_not_met
+    end
+  end
+
   def current_price
     bids.empty? ? 0 : bids.first.price
   end
