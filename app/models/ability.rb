@@ -14,5 +14,9 @@ class Ability
       a.user == user
     end
 
+    can :bid, Auction do |a|
+      a.user != user
+    end
+
   end
 end

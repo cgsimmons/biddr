@@ -1,10 +1,16 @@
 class Auction < ApplicationRecord
   belongs_to :user
+  has_many :bids, -> {order(created_at: :DESC) }, dependent: :destroy
+  has_many :bidders, through: :bids, source: :user
 
   validates :user_id, presence: true
   validates :title, presence: true, uniqueness: true
   validates :end_date, presence: true
   validate :valid_end_date?
+
+  def current_price
+    bids.empty? ? 0 : bids.last.price
+  end
 
   private
 

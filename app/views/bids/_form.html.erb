@@ -1,0 +1,10 @@
+<%= @bid.errors.full_messages.join(', ') %>
+<div>
+<%= form_for [@auction, @bid], remote: true do |f| %>
+  <div>
+    <%= f.number_field :price %>
+  </div>
+  <%= f.submit 'Bid' %>
+<% end %>
+<hr/>
+</div>

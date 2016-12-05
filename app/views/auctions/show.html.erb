@@ -12,3 +12,14 @@ Reserve Price: <%= number_to_currency(@auction.reserve_price) %>
   <% end %>
 <% end %>
 <hr>
+<% if can? :bid, @auction %>
+  <div id="bid-form">
+    <%= render 'bids/form' %>
+  </div>
+<% end %>
+<h2>Previous Bids</h2>
+<div id="bids">
+  <% @auction.bids.each do |bid| %>
+    <%= render 'bids/bid', {bid: bid} %>
+  <% end %>
+</div>

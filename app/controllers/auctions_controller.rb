@@ -26,7 +26,9 @@ class AuctionsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @bid = Bid.new
+  end
 
   def edit
     if cannot? :manage_auction, @auction

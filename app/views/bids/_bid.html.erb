@@ -1,0 +1,5 @@
+<div id="<%= dom_id(bid) %>">
+  <% time = bid.created_at %>
+  <p>$<%= bid.price %> on <%= time.strftime("%b #{time.day.ordinalize}, %Y") %></p>
+  <hr>
+</div>
