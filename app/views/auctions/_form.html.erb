@@ -10,11 +10,11 @@
   </div>
   <div>
     <%= p.label :reserve_price%>
-    <%= p.text_field :reserve_price %>
+    <%= p.number_field :reserve_price %>
   </div>
   <div>
   <%= p.label :end_date%>
-  <%= p.date_select :end_date, :order => [:month, :day, :year] %>
+  <%= p.text_field :end_date %>
 </div>
   <%= p.submit %>
   <% end %>

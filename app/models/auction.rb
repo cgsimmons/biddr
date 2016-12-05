@@ -9,7 +9,11 @@ class Auction < ApplicationRecord
   validate :valid_end_date?
 
   def current_price
-    bids.empty? ? 0 : bids.last.price
+    bids.empty? ? 0 : bids.first.price
+  end
+
+  def previous_bids
+    bids.where.not(price: current_price)
   end
 
   private
