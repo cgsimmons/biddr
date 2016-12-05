@@ -1,0 +1,20 @@
+<%= @auction.errors.full_messages.join(', ') %>
+<%= form_for @auction do |p| %>
+  <div>
+    <%= p.label :title%>
+    <%= p.text_field :title %>
+  </div>
+  <div>
+    <%= p.label :details%>
+    <%= p.text_field :details %>
+  </div>
+  <div>
+    <%= p.label :reserve_price%>
+    <%= p.text_field :reserve_price %>
+  </div>
+  <div>
+  <%= p.label :end_date%>
+  <%= p.date_select :end_date, :order => [:month, :day, :year] %>
+</div>
+  <%= p.submit %>
+  <% end %>

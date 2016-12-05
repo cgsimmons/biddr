@@ -10,7 +10,10 @@
 
   <body>
     <%= link_to 'Home', root_path %>
-
+    |
+    <%= link_to 'All Auctions', auctions_path %>
+    |
+    <%= link_to 'New Auction' , new_auction_path%>
   <div id="sign-in">
     <% if user_signed_in? %>
       Hello, <%= current_user.first_name %>

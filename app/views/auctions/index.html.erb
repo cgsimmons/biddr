@@ -1,0 +1,12 @@
+<h1>Auctions</h1>
+<br>
+<% if !@auctions.present? %>
+  <p>There are no auctions at this time.</p>
+<% else %>
+  <% @auctions.each do |p| %>
+    <%= link_to p.title, auction_path(p) %>
+    <hr>
+  <% end %>
+<% end %>
+</div>
+<div class="paginator"><%= paginate @auctions %></div>
