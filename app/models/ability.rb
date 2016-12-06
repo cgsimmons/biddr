@@ -15,7 +15,7 @@ class Ability
     end
 
     can :bid, Auction do |a|
-      a.user != user
+      (a.user != user) && (a.published? || a.reserve_not_met? || a.reserve_met?)
     end
   end
 end

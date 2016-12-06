@@ -24,7 +24,7 @@ puts "Seeded users."
     user: User.all.sample,
     end_date: Faker::Time.between(Date.today,  Date.today + 2.months, :all),
     created_at: Faker::Time.between(2.months.ago, Date.today, :all),
-    aasm_state: [:draft, :published].sample)
+    aasm_state: ["draft", "published"].sample)
   # random = rand(10)
   # price = 1 + rand(5)
   # random.times do

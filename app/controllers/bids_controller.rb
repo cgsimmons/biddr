@@ -11,12 +11,18 @@ class BidsController < ApplicationController
     @bid.auction = @auction
     @user = current_user
     @bid.user = @user
-
-    if @bid.save
-      redirect_to auction_path(@auction), notice: "Bid Successful!"
-    else
-      flash.now[:alert] = 'Error saving bid'
-      render 'auctions/show'
+    @previous_bid = @auction.current_bid
+    respond_to do |format|
+      if cannot? :bid, @auction
+        format.js { render :create_failure }
+        format.html  {redirect_to auction_path(@auction), notice: 'Cannot bid on this auction.' }
+      elsif @bid.save
+        format.js { render :create_success }
+        format.html { redirect_to auction_path(@auction), notice: "Bid Successful!"}
+      else
+        format.js { render :create_failure }
+        format.html { render 'auctions/show' }
+      end
     end
   end
 end

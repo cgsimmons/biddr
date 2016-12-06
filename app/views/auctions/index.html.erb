@@ -4,10 +4,8 @@
   <p>There are no auctions at this time.</p>
 <% else %>
   <% @auctions.each do |p| %>
-    <% if p.published? || (can? :manage_auction, p) %>
       <%= link_to p.title, auction_path(p) %>
       <hr>
-    <% end %>
   <% end %>
 <% end %>
 </div>

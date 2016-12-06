@@ -1,0 +1,12 @@
+$('#current-price').html("<%= number_to_currency(@bid.price) %>");
+<% if @auction.reserve_met? %>
+$('#reserve-met').html("High bidder is <%= @auction.current_bidder.full_name %>");
+<% end %>
+
+<% if @previous_bid %>
+$('#bids').prepend("<%= j render 'bid', bid: @previous_bid %>");
+$('#bids').children().first().hide();
+$('#bids').children().first().fadeIn(800);
+<% end %>
+<% @bid = Bid.new %>
+$('#bid-form').html('<%= j render 'form' %>');

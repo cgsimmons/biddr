@@ -48,6 +48,11 @@ class Auction < ApplicationRecord
     bids.first.user
   end
 
+  def current_bid
+    return unless bids.present?
+    bids.first
+  end
+
   def previous_bids
     bids.where.not(price: current_price)
   end

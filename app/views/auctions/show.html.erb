@@ -1,11 +1,8 @@
 <h1><%= @auction.title %></h1>
 by <%= @auction.user.full_name %><br>
-Current Price: <%= number_to_currency(@auction.current_price) %><br>
-<% if !@auction.reserve_met? %>
-Reserve not yet met<br>
-<% else %>
-  Bid by <%= @auction.current_bidder.full_name %>
-<% end %>
+Current Price: <span id='current-price'><%= number_to_currency(@auction.current_price) %></span><br>
+<span id='reserve-met'>
+  <%= @auction.reserve_met? ? "High bidder is  #{@auction.current_bidder.full_name}" : "Reserve not yet met" %> </span><br>
 <p><%= @auction.details %><br><br>
 
 <% if user_signed_in? %>
@@ -22,7 +19,7 @@ Reserve not yet met<br>
                           data: {confirm: 'Are you sure?'}%>
   <% end %>
 <% end %>
-<% if can?(:bid, @auction) %>
+<% if can? :bid, @auction %>
   <div id="bid-form">
     <%= render 'bids/form' %>
   </div>
