@@ -4,9 +4,12 @@ Rails.application.routes.draw do
 
   resources :auctions, shallow: true do
     resources :bids, only: [:create]
+    resources :publishings, only: :create
   end
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection
   end
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create], shallow: true do
+    resources :bids, only: [:index]
+  end
 end

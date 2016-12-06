@@ -1,0 +1,12 @@
+<h1>Your Bids</h1>
+<br>
+<% if !@bids.present? %>
+  <p>There are no bids at this time.</p>
+<% else %>
+  <% @bids.each do |b| %>
+    <%= link_to b.auction.title, auction_path(b) %>
+    <p><%= number_to_currency(b.price) %></p>
+    <hr>
+  <% end %>
+<% end %>
+</div>

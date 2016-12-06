@@ -1,18 +1,28 @@
 <h1><%= @auction.title %></h1>
-by <%= @auction.user.first_name %> <%= @auction.user.last_name %><br>
+by <%= @auction.user.full_name %><br>
 Current Price: <%= number_to_currency(@auction.current_price) %><br>
-
+<% if !@auction.reserve_met? %>
+Reserve not yet met<br>
+<% else %>
+  Bid by <%= @auction.current_bidder.full_name %>
+<% end %>
 <p><%= @auction.details %><br><br>
 
 <% if user_signed_in? %>
   <% if can? :manage_auction, @auction %>
-  <%= link_to 'edit', edit_auction_path(@auction)%>
-  <%= link_to 'delete', auction_path(@auction),
-                        method: :delete,
-                        data: {confirm: 'Are you sure?'}%>
+    <% if @auction.draft? %>
+      Auction is in draft mode<br>
+      <%= link_to 'Publish', auction_publishings_path(@auction),
+                             method: :post,
+                             data: { confirm: 'Are you sure?' }%>
+    <% end %>
+    <%= link_to 'edit', edit_auction_path(@auction)%>
+    <%= link_to 'delete', auction_path(@auction),
+                          method: :delete,
+                          data: {confirm: 'Are you sure?'}%>
   <% end %>
 <% end %>
-<% if can? :bid, @auction %>
+<% if can?(:bid, @auction) %>
   <div id="bid-form">
     <%= render 'bids/form' %>
   </div>

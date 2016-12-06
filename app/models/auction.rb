@@ -6,6 +6,7 @@ class Auction < ApplicationRecord
   validates :user_id, presence: true
   validates :title, presence: true, uniqueness: true
   validates :end_date, presence: true
+  validates :reserve_price, presence: true
   validate :valid_end_date?
 
   include AASM
@@ -22,7 +23,7 @@ class Auction < ApplicationRecord
     end
 
     event :meet_reserve do
-      transtitions from: :published, to: :reserve_met
+      transitions from: :published, to: :reserve_met
     end
 
     event :sell do
@@ -42,6 +43,11 @@ class Auction < ApplicationRecord
     bids.empty? ? 0 : bids.first.price
   end
 
+  def current_bidder
+    return unless bids.present?
+    bids.first.user
+  end
+
   def previous_bids
     bids.where.not(price: current_price)
   end
@@ -49,10 +55,8 @@ class Auction < ApplicationRecord
   private
 
   def valid_end_date?
-    if end_date < Date.today
-      errors.add(:due_date, 'cannot be before today\'s date.')
-      return false
-    end
-    true
+    return unless end_date.present? && DateTime.parse(end_date.to_s) < Date.today
+    errors.add(:end_date, 'cannot be before today\'s date.')
   end
+
 end

@@ -3,12 +3,7 @@ class AuctionsController < ApplicationController
   before_action :find_auction, except: [:index, :new, :create]
 
   def index
-    @auctions = Auction.all
-    if params[:search]
-      @auctions = Auction.search(params[:search]).order(params[:sort_by]).page(params[:page]).per(10)
-    else
-     @auctions = Auction.order(title: :ASC).page(params[:page]).per(10)
-   end
+    @auctions = Auction.all.page(params[:page]).per(10)
   end
 
   def new

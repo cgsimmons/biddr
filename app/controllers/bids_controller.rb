@@ -1,4 +1,8 @@
 class BidsController < ApplicationController
+  before_action :authenticate_user
+  def index
+    @bids = current_user.bids
+  end
 
   def create
     @auction = Auction.find(params[:auction_id])
@@ -11,7 +15,7 @@ class BidsController < ApplicationController
     if @bid.save
       redirect_to auction_path(@auction), notice: "Bid Successful!"
     else
-      flash.now[:alert] = 'Wrong Credentials'
+      flash.now[:alert] = 'Error saving bid'
       render 'auctions/show'
     end
   end
