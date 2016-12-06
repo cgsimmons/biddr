@@ -4,6 +4,7 @@ FactoryGirl.define do
     details Faker::Company.catch_phrase
     end_date Faker::Time.between(Date.today, Date.today + 3.months)
     reserve_price {10 + rand(100)}
+    aasm_state 'published'
     user
   end
 end
